@@ -4,18 +4,31 @@
 //There can be punctuation in a word, we will only add/keep punctuation at the end of a string if it is at the end of a string.
 //    for examples: Hello.==> Ellohay.    Good-bye! ==> Ood-byegay!    so... ==> osay...
 
+import java.util.Arrays;
+
 public class Book
 {
   public String pigLatin(String word)
   {
-    if(word.substring(0,2)=="a"||word.substring(0,2)=="e"||word.substring(0,2)=="i"||word.substring(0,2)=="o"||word.substring(0,2)=="u"){
+    String[] vowStrings = {"a","e","i","o","u"};
+    String[] puncStrings = {"!",".",";",":","?", "\""};
+    if(Arrays.asList(vowStrings).contains(word.substring(0,1))){
       return word+"ay";
     }
-    else{
-      
+    else {
+      for (int i=0; i<vowStrings.length; i++){
+        if(word.contains(vowStrings[i])){
+          return word.substring(word.indexOf(vowStrings[i]))+word.substring(0,word.indexOf(vowStrings[i]))+"ay";
+        }
+      }
     }
     
+    return word + "ay";
   }
+      
+    
+    
+  
   
   public int endPunctuation(String word)  //return the index of where the punctuation is at the end of a String. If it is all punctuation return 0, if there is no punctuation return -1
   {
