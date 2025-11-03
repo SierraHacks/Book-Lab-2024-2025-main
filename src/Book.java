@@ -12,6 +12,12 @@ public class Book
   {
     String[] vowStrings = {"a","e","i","o","u"};
     String[] puncStrings = {"!",".",";",":","?", "\""};
+    String[] digStrings = {"0","1","2","3","4","5","6","7","8","9"};
+    
+    if(word.length()==0){
+      return word;
+    }
+    
     if(Arrays.asList(vowStrings).contains(word.substring(0,1))){
       return word+"ay";
     }
