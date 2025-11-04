@@ -13,23 +13,32 @@ public class Book
     String[] vowStrings = {"a","e","i","o","u"};
     String[] puncStrings = {"!",".",";",":","?", "\""};
     String[] digStrings = {"0","1","2","3","4","5","6","7","8","9"};
+    String newWord = "";
     
+    
+
     if(word.length()==0){
-      return word;
+      newWord= word;
     }
-    
     if(Arrays.asList(vowStrings).contains(word.substring(0,1))){
-      return word+"ay";
+      newWord = word+"yay";
     }
     else {
       for (int i=0; i<vowStrings.length; i++){
         if(word.contains(vowStrings[i])){
-          return word.substring(word.indexOf(vowStrings[i]))+word.substring(0,word.indexOf(vowStrings[i]))+"ay";
+          newWord+= word.substring(word.indexOf(vowStrings[i]))+word.substring(0,word.indexOf(vowStrings[i]))+"ay";
         }
       }
     }
-    
-    return word + "ay";
+    for (int i=0; i<vowStrings.length; i++){
+      if (newWord.contains(vowStrings[i]) || newWord.length()==0){
+        if(newWord.charAt(0).isUppercase()==true){
+          newWord.
+        }
+      }
+    }
+    newWord = word + "ay";
+    return newWord;
   }
       
     
