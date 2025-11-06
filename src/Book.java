@@ -14,30 +14,50 @@ public class Book
     String[] puncStrings = {"!",".",";",":","?", "\""};
     String[] digStrings = {"0","1","2","3","4","5","6","7","8","9"};
     String newWord = "";
+    String puncStore = "";
     
     
 
     if(word.length()==0){
       newWord= word;
+      return newWord;
     }
-    if(Arrays.asList(vowStrings).contains(word.substring(0,1))){
+    for (int i=0; i<puncStrings.length;i++){
+      if(word.contains(puncStrings[i])){
+        puncStore += word.substring(word.indexOf(puncStrings[i]));
+        word = word.substring() word.substring(word.indexOf(puncStrings[i]));
+      }
+      else{
+        newWord = word;
+      }
+    }
+
+    for (int i=0; i<vowStrings.length; i++){
+      if(newWord.contains(vowStrings[i])){
+        newWord= newWord.substring(newWord.indexOf(vowStrings[i]))+newWord.substring(0,newWord.indexOf(vowStrings[i]))+"ay";
+        break;
+      }
+      else if(!newWord.contains(vowStrings[i])){
+        if(i==vowStrings.length-1){
+          newWord = newWord + "ay";
+          }
+      }
+    }
+    if(Arrays.asList(vowStrings).contains(newWord.substring(0,1))){
       newWord = word+"yay";
     }
-    else {
-      for (int i=0; i<vowStrings.length; i++){
-        if(word.contains(vowStrings[i])){
-          newWord+= word.substring(word.indexOf(vowStrings[i]))+word.substring(0,word.indexOf(vowStrings[i]))+"ay";
+    
+    
+    
+    for (int i=0; i<newWord.length(); i++){
+      char c = newWord.charAt(i);
+      if(Character.isUpperCase(c)){
+        newWord = newWord.toLowerCase();
+        newWord = newWord.substring(0,1).toUpperCase() + newWord.substring(1);
         }
-      }
     }
-    for (int i=0; i<vowStrings.length; i++){
-      if (newWord.contains(vowStrings[i]) || newWord.length()==0){
-        if(newWord.charAt(0).isUppercase()==true){
-          newWord.
-        }
-      }
-    }
-    newWord = word + "ay";
+    
+    
     return newWord;
   }
       
