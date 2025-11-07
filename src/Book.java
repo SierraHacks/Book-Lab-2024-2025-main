@@ -22,6 +22,7 @@ public class Book
       newWord= word;
       return newWord;
     }
+  
     for (int i=0; i<puncStrings.length;i++){
       if(word.contains(puncStrings[i])){
         puncStore += word.substring(word.indexOf(puncStrings[i]));
@@ -81,7 +82,26 @@ public class Book
 
   public String translateSentence(String sentence)
   {
-    String retSentence = "";
+    String retSentence = sentence;
+    String finSentence = "";
+
+    int sent = sentence.indexOf(" ");
+
+    while(sent>=0){
+      String word = retSentence.substring(0,sent);
+      finSentence = pigLatin(word) + " ";
+      
+      retSentence = sentence.substring(sent+1);
+      sent = sentence.indexOf(" ");
+      
+    }
+    if(sent==-1){
+      String word = sentence;
+      pigLatin(word);
+      retSentence = 
+    }
+
+    
 
 
     return retSentence;
