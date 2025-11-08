@@ -10,56 +10,51 @@ public class Book
 {
   public String pigLatin(String word)
   {
-    String[] vowStrings = {"a","e","i","o","u","A","E","I","O","U"};
-    String[] puncStrings = {"?","!",".",";",":"};
-    String[] digStrings = {"0","1","2","3","4","5","6","7","8","9"};
-    String newWord = "";
+    if (word.length() == 0) return "";
+
+    // Handle hyphenated words
+    if (word.contains("-")) {
+        String[] parts = word.split("-");
+        for (int i = 0; i < parts.length; i++) {
+            parts[i] = pigLatin(parts[i]);
+        }
+        return String.join("-", parts);
+    }
+
     String puncStore = "";
-    
-    
 
-    if(word.length()==0){
-      newWord= word;
-      return newWord;
+    // store trailing punctuation
+    while (!word.isEmpty() && !Character.isLetterOrDigit(word.charAt(word.length() - 1))) {
+        puncStore = word.charAt(word.length() - 1) + puncStore;
+        word = word.substring(0, word.length() - 1);
     }
-  
-    for (int i=0; i<puncStrings.length;i++){
-      if(word.contains(puncStrings[i])){
-        puncStore += word.substring(word.indexOf(puncStrings[i]));
-        word = word.substring(0,word.indexOf(puncStrings[i]));
-        break;
-      }
-      
-    }
-    
 
-    for (int i=0; i<vowStrings.length; i++){
-      if(word.contains(vowStrings[i])){
-        newWord= word.substring(word.indexOf(vowStrings[i]))+word.substring(0,word.indexOf(vowStrings[i]))+"ay";
-        break;
-      }
-      else if(!word.contains(vowStrings[i])){
-        if(i==vowStrings.length-1){
-          newWord = word + "ay";
-          }
-      }
-    }
-    if(Arrays.asList(vowStrings).contains(word.substring(0,1))){
-      newWord = word+"yay";
-    }
-    
-    
-    
-    
-    for (int i=0; i<newWord.length(); i++){
-      char c = newWord.charAt(i);
-      if(Character.isUpperCase(c)){
-        newWord = newWord.toLowerCase();
-        newWord = newWord.substring(0,1).toUpperCase() + newWord.substring(1);
+    if (word.isEmpty()) return puncStore; // just punctuation, e.g. "..."
+
+    boolean isCapitalized = Character.isUpperCase(word.charAt(0));
+
+    int firstVowel = -1;
+    for (int i = 0; i < word.length(); i++) {
+        char c = word.charAt(i);
+        if ("aeiouAEIOU".indexOf(c) != -1) {
+            firstVowel = i;
+            break;
         }
     }
-    
-    
+
+    String newWord;
+    if (firstVowel == 0) {
+        newWord = word + "yay";
+    } else if (firstVowel > 0) {
+        newWord = word.substring(firstVowel) + word.substring(0, firstVowel) + "ay";
+    } else {
+        newWord = word + "ay"; // no vowels
+    }
+
+    if (isCapitalized) {
+        newWord = newWord.substring(0, 1).toUpperCase() + newWord.substring(1).toLowerCase();
+    }
+
     return newWord + puncStore;
   }
       
@@ -82,28 +77,23 @@ public class Book
 
   public String translateSentence(String sentence)
   {
-    String retSentence = sentence;
     String finSentence = "";
+    String retSentence = sentence.trim();
 
-    int sent = sentence.indexOf(" ");
-
-    while(sent>=0){
-      String word = retSentence.substring(0,sent);
-      finSentence = pigLatin(word) + " ";
-      
-      retSentence = sentence.substring(sent+1);
-      sent = sentence.indexOf(" ");
-      
-    }
-    if(sent==-1){
-      String word = sentence;
-      pigLatin(word);
-      retSentence = 
+    while (retSentence.contains(" ")) {
+        int sent = retSentence.indexOf(" ");
+        String word = retSentence.substring(0, sent);
+        if (!finSentence.isEmpty()) finSentence += " ";
+        finSentence += pigLatin(word);
+        retSentence = retSentence.substring(sent + 1);
     }
 
-    
+    // Handle last word
+    if (!retSentence.isEmpty()) {
+        if (!finSentence.isEmpty()) finSentence += " ";
+        finSentence += pigLatin(retSentence);
+    }
 
-
-    return retSentence;
+    return finSentence;
   }
 }  
