@@ -7,15 +7,28 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.net.URL;
 
-
-
-
 public class Book
 {
   private String book;
 
   public Book(String url){
     readBook(url);
+  }
+
+  private void readBook(String link){
+    try{
+      URL url = new URL(link);
+      Scanner s = new Scanner(url.openStream());
+      
+      while(s.hasNext()){
+        String text = s.nextLine();
+        System.out.println(text);
+        book += text;
+      }
+    }
+    catch(IOException ex){
+      ex.printStackTrace();
+    }
   }
 
   public String pigLatin(String word)

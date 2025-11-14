@@ -7,10 +7,15 @@ public class readBook {
   public void read(){
     try{
         Scanner in = new Scanner(new File("https://www.gutenberg.org/cache/epub/6130/pg6130.txt"));
+        while(in.hasNextLine()){
+          String line = in.nextLine();  
+        }
+        
     }
     catch(IOException e){
         System.out.println("Error in Opening Scanner");
     }
+    
 
     }
 }
